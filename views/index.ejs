@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en" class="no-js">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ummo, a personalized speech coaching app.">
+    <meta name="author" content="Anshul Bhagi">
+    <!-- <link rel="shortcut icon" href="assets/ico/favicon.png"> -->
+
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700' rel='stylesheet' type='text/css'>
+
+    <!-- CSS reset -->
+    <link rel="stylesheet" href="css/reset.css">
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Resource style -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Modernizr -->
+    <script src="js/modernizr.js"></script>
+
+    <!-- tag-it plugin css -->
+    <link rel="stylesheet" href="css/jquery.tagit.css">
+    <link rel="stylesheet" href="css/tagit.ui-zendesk.css">
+
+    <title>Ummo | Speech Coach</title>
+</head>
+
+<body>
+    <header class="cd-header is-visible is-fixed">
+        <div class="cd-logo">
+            <a href="#0">
+                <img src="images/ummologo_horizontal.png" alt="Logo" style="width: 170px;">
+            </a>
+        </div>
+
+        <nav>
+            <ul class="cd-secondary-nav">
+                <li><a class="cd-signin" href="#0">Log In</a>
+                </li>
+                <li><a class="cd-signup" href="#0"> Register</a>
+                </li>
+            </ul>
+        </nav>
+        <!-- cd-nav -->
+
+        <a class="cd-primary-nav-trigger" href="#0">
+            <span class="cd-menu-text">Settings</span><span class="cd-menu-icon"></span>
+        </a>
+        <!-- cd-primary-nav-trigger -->
+    </header>
+
+    <style>
+        table {} td {
+            padding-top: 20px;
+            padding-bottom: 20px;
+            padding-left: 100px;
+            text-align: left;
+            vertical-align: middle;
+        }
+        .onoffswitch {
+            margin: auto!important;
+        }
+    </style>
+
+    <!-- <nav> -->
+    <div class="cd-primary-nav" style="margin: auto; text-align: center;">
+
+        <div class="row" style="width: 100%; text-align: center; margin: auto; padding-top: 20px;">
+            <div class="col" style="margin: auto; width: 60%;">
+                <h2 class="cd-label" style="color: #000000;">Personalize ummo</h2>
+                <table style="width: 100%; margin-top: 30px;">
+                    
+                    <tr style="width: 100%;">
+                        <td style="width: 50%; font-size: 24px;">Track volume</td>
+                        <td style="width: 50%;">
+                            <div class="onoffswitch">
+                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch_vol" checked>
+                                <label class="onoffswitch-label" for="switch_vol">
+                                    <span class="onoffswitch-inner"></span>
+                                    <span class="onoffswitch-switch"></span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="width: 100%;">
+                        <td style="width: 50%; font-size: 24px;">Track pace (words per minute)</td>
+                        <td style="width: 50%;">
+                            <div class="onoffswitch">
+                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch_pace" checked>
+                                <label class="onoffswitch-label" for="switch_pace">
+                                    <span class="onoffswitch-inner"></span>
+                                    <span class="onoffswitch-switch"></span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="width: 100%;">
+                        <td style="width: 50%; font-size: 24px;">Track curse words</td>
+                        <td style="width: 50%;">
+                            <div class="onoffswitch">
+                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch_cursewords" checked>
+                                <label class="onoffswitch-label" for="switch_cursewords">
+                                    <span class="onoffswitch-inner"></span>
+                                    <span class="onoffswitch-switch"></span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="width: 100%;">
+                        <td style="width: 50%; font-size: 24px;">Track filler words</td>
+                        <td style="width: 50%;">
+                            <div class="onoffswitch">
+                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch_fillerwords" checked>
+                                <label class="onoffswitch-label" for="switch_fillerwords">
+                                    <span class="onoffswitch-inner"></span>
+                                    <span class="onoffswitch-switch"></span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="width: 100%;">
+                        <td style="width: 100%; padding-top: 0px;" colspan="2">
+                            <ul id="fillerWordTagsField" style="width: 90%;"></ul>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- </nav> -->
+
+    <div class="container cd-intro" style="margin-top: 160px;">
+        <div class="row centered">
+            <div class="col">
+                <!--<img src="image/ummologo_black.png" style="width:30%; height: 30%;">-->
+                <!--<h1>ummo</h1>-->
+                <h1>Your personalized speech coach.</h1>
+            </div>
+        </div>
+        <div class="row centered" style="margin-top:80px;">
+            <div class="col-md-3" style="display: none;">
+
+            </div>
+            <div id="centralcolwithtoggle" class="col-lg-12">
+                <div class="switch">
+                    <input id="cmn-toggle-4" class="cmn-toggle cmn-toggle-round-flat" type="checkbox">
+                    <label style="margin: auto;" for="cmn-toggle-4"></label>
+                </div>
+                <div id="timerdiv">
+                    <p id="clockelement" class="inactive"></p>
+                </div>
+            </div>
+            <div class="col-md-3" style="display: none;">
+
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+
+    <!-- <section class="cd-intro">
+        <h1>Your personalized speech coach.</h1>
+    </section>-->
+    <div class="container" id="transcriptcontainer" style="margin-top: 50px;">
+        <div class="row w centered">
+            <br>
+            <div class="col">
+                <span id="final_span" class="final-result">Flip the switch and start speaking. We'll listen and give you feedback.</span>
+                <span id="interim_span" class="interim-result"></span>
+                <!--
+                <p id="convertedtext" class="interim-result">Start recording your voice, the converted text will show up here.</p>
+                -->
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="speechreportcard" style="margin-top: 140px;">
+        <div class="row centered">
+            <style>
+                .canvasjs-chart-credit {
+                    display: none;
+                }
+            </style>
+            <div id="colAllWords" class="col-md-6">
+                <div id="allWordGraph" style="width:100%; height:300px;"></div>
+            </div>
+            <div id="colFillerWords" class="col-md-6">
+                <div id="fillerWordGraph" style="width:100%; height:300px;"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="cd-user-modal">
+        <!-- this is the entire modal form, including the background -->
+        <div class="cd-user-modal-container">
+            <!-- this is the container wrapper -->
+            <ul class="cd-switcher">
+                <li><a href="#0">Sign in</a>
+                </li>
+                <li><a href="#0">New account</a>
+                </li>
+            </ul>
+
+            <div id="cd-login">
+                <!-- log in form -->
+                <form class="cd-form">
+                    <p class="fieldset">
+                        <label class="image-replace cd-email" for="signin-email">E-mail</label>
+                        <input class="full-width has-padding has-border" id="signin-email" type="email" placeholder="E-mail">
+                        <span class="cd-error-message">Error message here!</span>
+                    </p>
+
+                    <p class="fieldset">
+                        <label class="image-replace cd-password" for="signin-password">Password</label>
+                        <input class="full-width has-padding has-border" id="signin-password" type="text" placeholder="Password">
+                        <a href="#0" class="hide-password">Hide</a>
+                        <span class="cd-error-message">Error message here!</span>
+                    </p>
+
+                    <p class="fieldset">
+                        <input type="checkbox" id="remember-me" checked>
+                        <label for="remember-me">Remember me</label>
+                    </p>
+
+                    <p class="fieldset">
+                        <input class="full-width" type="submit" value="Login">
+                    </p>
+                </form>
+
+                <p class="cd-form-bottom-message"><a href="#0">Forgot your password?</a>
+                </p>
+                <!-- <a href="#0" class="cd-close-form">Close</a> -->
+            </div>
+            <!-- cd-login -->
+
+            <div id="cd-signup">
+                <!-- sign up form -->
+                <form class="cd-form">
+                    <p class="fieldset">
+                        <label class="image-replace cd-username" for="signup-username">Username</label>
+                        <input class="full-width has-padding has-border" id="signup-username" type="text" placeholder="Username">
+                        <span class="cd-error-message">Error message here!</span>
+                    </p>
+
+                    <p class="fieldset">
+                        <label class="image-replace cd-email" for="signup-email">E-mail</label>
+                        <input class="full-width has-padding has-border" id="signup-email" type="email" placeholder="E-mail">
+                        <span class="cd-error-message">Error message here!</span>
+                    </p>
+
+                    <p class="fieldset">
+                        <label class="image-replace cd-password" for="signup-password">Password</label>
+                        <input class="full-width has-padding has-border" id="signup-password" type="text" placeholder="Password">
+                        <a href="#0" class="hide-password">Hide</a>
+                        <span class="cd-error-message">Error message here!</span>
+                    </p>
+
+                    <p class="fieldset">
+                        <input type="checkbox" id="accept-terms">
+                        <label for="accept-terms">I agree to the <a href="#0">Terms</a>
+                        </label>
+                    </p>
+
+                    <p class="fieldset">
+                        <input class="full-width has-padding" type="submit" value="Create account">
+                    </p>
+                </form>
+
+                <!-- <a href="#0" class="cd-close-form">Close</a> -->
+            </div>
+            <!-- cd-signup -->
+
+            <div id="cd-reset-password">
+                <!-- reset password form -->
+                <p class="cd-form-message">Lost your password? Please enter your email address. You will receive a link to create a new password.</p>
+
+                <form class="cd-form">
+                    <p class="fieldset">
+                        <label class="image-replace cd-email" for="reset-email">E-mail</label>
+                        <input class="full-width has-padding has-border" id="reset-email" type="email" placeholder="E-mail">
+                        <span class="cd-error-message">Error message here!</span>
+                    </p>
+
+                    <p class="fieldset">
+                        <input class="full-width has-padding" type="submit" value="Reset password">
+                    </p>
+                </form>
+
+                <p class="cd-form-bottom-message"><a href="#0">Back to log-in</a>
+                </p>
+            </div>
+            <!-- cd-reset-password -->
+            <a href="#0" class="cd-close-form">Close</a>
+        </div>
+        <!-- cd-user-modal-container -->
+    </div>
+    <!-- cd-user-modal -->
+    <footer class="has-adv">
+        <div class="cd-container">
+            <div class="footer-left">
+                <p>Â© 2016 Ummo. Brought to you by the students of HBS.</p>
+                <ul>
+                    <li><a href="mailto:hello@ummoapp.com">hello@ummoapp.com</a>
+                    </li>
+                    <li><a href="http://ummoapp.com/about/">About</a>
+                    </li>
+                    <li><a href="http://ummoapp.com/faq/">FAQ</a>
+                    </li>
+                </ul>
+
+
+                <ul class="redirect-socials">
+                    <li><a class="twitter" href="#"><span>Twitter</span></a>
+                    </li>
+                    <li><a class="facebook" href="#"><span>Facebook</span></a>
+                    </li>
+                    <li><a class="google" href="#"><span>Google+</span></a>
+                    </li>
+                    <li><a class="dribbble" href="#"><span>Instagram</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- footer-bottom -->
+    </footer>
+    
+    <!-- back to top element -->
+    <a href="#0" class="cd-top">Top</a>
+    
+    <!-- jQuery -->
+    <script src="js/jquery-2.1.1.js"></script>
+
+    <!-- jQuery plugins-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+
+    <!-- bootstrap js -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- tag-it code for tag implementation e.g. for filler word settings field -->
+    <script src="js/tag-it.min.js"></script>
+
+    <!-- canvasJS for histogram visualizations -->
+    <script type="text/javascript" src="js/jquery.canvasjs.min.js"></script>
+
+    <!-- custom js source files -->
+    <script src="js/webkitvoicerecognition.js"></script> <!-- needs to be loaded before main.js -->
+    <script src="js/require.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/watson.compiled.js"></script>
+
+
+    <script>
+        $('input[type=checkbox]').change(function () {
+            var checked = $("#cmn-toggle-4").is(":checked");
+            console.log('box is now: ' + checked);
+            if (checked) {
+                var micOptions = {
+      bufferSize: 1024
+    };
+    var mic = new Microphone(micOptions);
+    console.log("now what");
+                };
+            
+        });
+
+    </script>
+
+<!--
+    <script>
+        $('input[type=checkbox]').change(function () {
+            var checked = $("#cmn-toggle-4").is(":checked");
+            console.log('box is now: ' + checked);
+            if (checked) {
+                //$("#fillerWordGraph").hide();
+                //$("#allWordGraph").hide();
+                final_span.innerHTML = '';
+                startRecognitionAndAnalysis();
+            } else {
+                stopRecognitionAndAnalysis();
+
+            }
+        });
+
+    </script>
+-->
+</body>
+
+</html>

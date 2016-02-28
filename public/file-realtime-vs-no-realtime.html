@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>File Promise Example - Watson Speech to Text</title>
+</head>
+<body>
+
+<section>
+    <h2>Transcribe File, Comparing <code>{realtime: true}</code> to <code>{realtime: false}</code></h2>
+    <input type="file" id="audiofile"> <button id="button">Transcribe and Play</button> <button id="stop">Stop</button>
+    <p><small><i>Supported types are wav, ogg/opus (not ogg/vorbis), and flac. However, most browsers do not support flac.</i></small></p>
+
+    <h2><code>realtime: false</code> Output:</h2>
+    <div id="output">--</div>
+
+    <h2><code>realtime: true</code> Output:</h2>
+    <p><small><i>When transcription results are available faster than real-time (such as when simultaneously uploading and playing a file on a high-bandwidth connection), the TimingStream slows them down results to real-time.</i></small></p>
+    <div id="realtime-output">--</div>
+</section>
+
+<script src="watson-speech.js"></script>
+<!-- window.fetch pollyfill for IE/Edge & Older Chrome/FireFox -->
+<script src="bower_components/fetch/fetch.js"></script>
+
+<h2>Code for this demo:</h2>
+<pre><code><script style="display: block;">
+function renderStream(stream, outputElement) {
+  stream.pipe(new WatsonSpeech.SpeechToText.WritableElementStream({
+    outputElement: outputElement,
+    objectMode: true
+  }));
+
+  stream.on('error', function(err) {
+    console.log(err);
+  });
+
+  stream.on('playback-error', function(err) {
+    console.log(err);
+  });
+}
+
+var stream;
+
+document.querySelector('#button').onclick = function () {
+  fetch('/api/speech-to-text/token').then(function(response) {
+    return response.text();
+  }).then(function (token) {
+
+    stream = WatsonSpeech.SpeechToText.recognizeFile({
+      token: token,
+      data: document.querySelector('#audiofile').files[0],
+      play: true,
+      objectMode: true,
+      realtime: false, // defaults to true when play is true, but we're going to turn it off and then manually do it in a moment to show the difference
+      timestamps: true // defaults to true when realtime is true
+    });
+
+    renderStream(stream, '#output');
+
+    // now do what the realtime option would have done: pipe through a TimingStream
+    var realtimeStream = stream.pipe(new WatsonSpeech.SpeechToText.TimingStream({objectMode: true}));
+
+    renderStream(realtimeStream, '#realtime-output');
+
+  }).catch(function(error) {
+    console.log(error);
+  });
+};
+
+document.querySelector('#stop').onclick = function() {
+  if (stream) {
+    stream.stop();
+  }
+};
+</script></code></pre>
+</body>
+</html>

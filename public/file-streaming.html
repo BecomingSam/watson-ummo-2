@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>File Promise Example - Watson Speech to Text</title>
+</head>
+<body>
+
+<section>
+    <h2>Transcribe File, Streaming</h2>
+    <input type="file" id="audiofile"> <button id="button">Transcribe and Play</button> <button id="stop">Stop</button>
+    <p><small><i>Supported types are wav, ogg/opus (not ogg/vorbis), and flac. However, most browsers do not support flac.</i></small></p>
+
+    <h2>Output:</h2>
+    <div id="output">--</div>
+</section>
+
+<script src="watson-speech.js"></script>
+<!-- window.fetch pollyfill for IE/Edge & Older Chrome/FireFox -->
+<script src="bower_components/fetch/fetch.js"></script>
+
+<h2>Code for this demo:</h2>
+<pre><code><script style="display: block;">
+
+var stream;
+document.querySelector('#button').onclick = function () {
+
+  fetch('/api/speech-to-text/token').then(function(response) {
+    return response.text();
+  }).then(function (token) {
+
+    stream = WatsonSpeech.SpeechToText.recognizeFile({
+      token: token,
+      data: document.querySelector('#audiofile').files[0],
+      play: true, // play the audio out loud
+      outputElement: '#output' // CSS selector or DOM Element (optional)
+    });
+
+    stream.on('error', function(err) {
+        console.log(err);
+    });
+
+  }).catch(function(error) {
+      console.log(error);
+  });
+};
+
+document.querySelector('#stop').onclick = function() {
+    if (stream) {
+        stream.stop();
+    }
+};
+</script></code></pre>
+</body>
+</html>
+
+
