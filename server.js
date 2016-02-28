@@ -16,6 +16,7 @@
 
 'use strict';
 
+var cool = require('cool-ascii-faces');
 var express      = require('express'),
     app          = express();
 
@@ -30,6 +31,15 @@ app.use('/api/text-to-speech/', require('./tts-token.js'));
 var port = process.env.VCAP_APP_PORT || 3000;
 app.listen(port, function() {
    console.log('Example IBM Watson Speech JS SDK client app & token server live at http://localhost:%s/', port);
+});
+
+
+app.get('/', function(request, response) {
+  response.render('pages/index')
+});
+
+app.get('/cool', function(request, response) {
+  response.send(cool());
 });
 
 // chrome requires https to access the user's microphone unless it's a localhost url so
