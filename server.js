@@ -31,7 +31,7 @@ app.use('/api/text-to-speech/', require('./tts-token.js'));
 //var port = process.env.VCAP_APP_PORT || 3000;
 app.set('port', (process.env.PORT || 5000));
 app.listen(app.get('port'), function() {
-   console.log('Example IBM Watson Speech JS SDK client app & token server live at http://localhost:%s/', port);
+   console.log('Example IBM Watson Speech JS SDK client app & token server live at http://localhost:%s/', app.get('port'));
 });
 
 
